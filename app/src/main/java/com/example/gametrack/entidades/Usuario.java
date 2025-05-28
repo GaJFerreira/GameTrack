@@ -1,29 +1,25 @@
 package com.example.gametrack.entidades;
 
 public class Usuario {
+
     private long id;
-    private String nome;
+
     private String email;
     private String senha;
+
+    private String nome;
     private String steamId;
+    private String imagemPerfil; //url
 
     public Usuario() {
-
     }
 
-    public Usuario(String email, long id, String nome, String senha, String steamId) {
-        this.email = email;
+    public Usuario(long id, String nome, String steamId, String imagemPerfil, String senha, String email) {
         this.id = id;
         this.nome = nome;
-        this.senha = senha;
         this.steamId = steamId;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
+        this.imagemPerfil = imagemPerfil;
+        this.senha = senha;
         this.email = email;
     }
 
@@ -43,14 +39,6 @@ public class Usuario {
         this.nome = nome;
     }
 
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
-
     public String getSteamId() {
         return steamId;
     }
@@ -59,14 +47,41 @@ public class Usuario {
         this.steamId = steamId;
     }
 
+    public String getImagemPerfil() {
+        return imagemPerfil;
+    }
+
+    public void setImagemPerfil(String imagemPerfil) {
+        this.imagemPerfil = imagemPerfil;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     @Override
     public String toString() {
-        return "usuario{" +
-                "email='" + email + '\'' +
-                ", id=" + id +
+        return "Usuario{" +
+                "id=" + id +
                 ", nome='" + nome + '\'' +
+                ", steamId=" + steamId +
+                ", imagemPerfil='" + imagemPerfil + '\'' +
                 ", senha='" + senha + '\'' +
-                ", steamId='" + steamId + '\'' +
+                ", email='" + email + '\'' +
                 '}';
     }
+
+
 }
