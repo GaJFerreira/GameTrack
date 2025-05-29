@@ -1,4 +1,4 @@
-package com.example.gametrack.Activits;
+package com.example.gametrack.activity;
 
 import android.os.Bundle;
 

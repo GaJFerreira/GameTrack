@@ -1,16 +1,14 @@
-package com.example.gametrack.dao;
+package com.example.gametrack.data.dao;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.example.gametrack.interfaces.iUsuario;
-import com.example.gametrack.entidades.Usuario;
+import com.example.gametrack.data.model.Usuario;
 import com.example.gametrack.utils.ConexaoDb;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Currency;
 import java.util.List;
 
 public class UsuarioDao implements iUsuario {
@@ -163,7 +161,6 @@ public class UsuarioDao implements iUsuario {
                         cursor.getString(cursor.getColumnIndex("imagemPerfil")),
                         cursor.getString(cursor.getColumnIndex("senha")),
                         cursor.getString(cursor.getColumnIndex("email"))
-
                 );
 
                 usuarios.add(usuario);

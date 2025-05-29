@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "661095027551",
+    "project_id": "gametrack-79ef1",
+    "storage_bucket": "gametrack-79ef1.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:661095027551:android:d49b9ae74c1e7dc5f0dcea",
+        "android_client_info": {
+          "package_name": "com.example.gametrack"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDjfvCwGfbZovYL-4fm0Sekbu8GJoowJF8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

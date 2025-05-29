@@ -1,4 +1,4 @@
-package com.example.gametrack.entidades;
+package com.example.gametrack.data.model;
 
 public class Biblioteca {
 

@@ -1,12 +1,10 @@
-package com.example.gametrack.entidades;
+package com.example.gametrack.data.model;
 
 public class Usuario {
 
     private long id;
-
     private String email;
     private String senha;
-
     private String nome;
     private String steamId;
     private String imagemPerfil; //url

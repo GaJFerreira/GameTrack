@@ -1,6 +1,6 @@
 package com.example.gametrack.interfaces;
 
-import com.example.gametrack.entidades.Usuario;
+import com.example.gametrack.data.model.Usuario;
 
 import java.util.List;
 
