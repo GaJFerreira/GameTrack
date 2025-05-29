@@ -52,7 +52,6 @@ public class UsuarioDao implements iUsuario {
     public Usuario buscarUsuarioPorId(long id) {
         SQLiteDatabase conexao = ConexaoDb.getInstance();
 
-        String sql = "SELECT * FROM usuario WHERE id = ?";
         String[] args = {String.valueOf(id)};
         String[] colunas = {"id", "nome", "email", "senha", "steamId", "imagemPerfil"};
 
