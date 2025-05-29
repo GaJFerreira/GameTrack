@@ -27,7 +27,7 @@ public class ConexaoDb extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        String sql = "CREATE TABLE IF NOT EXISTS usuario(" +
+        String sqlUsuario = "CREATE TABLE IF NOT EXISTS usuario(" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "nome VARCHAR(255)," +
                 "steamId VARCHAR(255)," +
@@ -36,7 +36,22 @@ public class ConexaoDb extends SQLiteOpenHelper {
                 "email VARCHAR(255)" +
                 ")";
 
-        db.execSQL(sql);
+        db.execSQL(sqlUsuario);
+
+        String sqlMeta = "CREATE TABLE IF NOT EXISTS meta(" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "bibliotecaId INTEGER NOT NULL," +        // FK para biblioteca.id (vínculo principal)
+                "tipo TEXT," +                            // Armazenará o nome do enum Meta.Tipo
+                "valorMeta TEXT," +
+                "progressoAtual TEXT," +
+                "dataLimite TEXT," +                      // Formato YYYY-MM-DD
+                "prioridade TEXT," +                      // Armazenará o nome do enum Meta.Prioridade
+                "observacao TEXT," +
+                "status TEXT," +                          // Armazenará o nome do enum Meta.Status
+                "FOREIGN KEY (bibliotecaId) REFERENCES biblioteca(id) ON DELETE CASCADE" +
+                ")";
+        db.execSQL(sqlMeta);
+
     }
 
     @Override
