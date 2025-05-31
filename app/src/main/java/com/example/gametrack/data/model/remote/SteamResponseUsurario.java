@@ -2,7 +2,7 @@ package com.example.gametrack.data.model.remote;
 
 import java.util.List;
 
-public class SteamResponseGetUser {
+public class SteamResponseUsurario {
     private Response response;
 
     public Response getResponse() {

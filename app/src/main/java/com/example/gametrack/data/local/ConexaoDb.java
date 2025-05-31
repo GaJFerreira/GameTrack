@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class ConexaoDb extends SQLiteOpenHelper {
 
     private static final String NOME_BANCO = "gametrack.db";
-    private static final int VERSAO_BANCO = 1;
+    private static final int VERSAO_BANCO = 2;
 
     private static ConexaoDb instancia;
     private static SQLiteDatabase conexao;
@@ -30,12 +30,20 @@ public class ConexaoDb extends SQLiteOpenHelper {
                 "id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "nome VARCHAR(255)," +
                 "steamId VARCHAR(255)," +
+                "email VARCHAR(255) UNIQUE," +
                 "imagemPerfil VARCHAR(255))");
+
+        db.execSQL("CREATE TABLE IF NOT EXISTS jogo (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "appSteamId INTEGER," +
+                "titulo VARCHAR(255)," +
+                "icone VARCHAR(255))");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS usuario");
+        db.execSQL("DROP TABLE IF EXISTS jogo");
         onCreate(db);
     }
 }

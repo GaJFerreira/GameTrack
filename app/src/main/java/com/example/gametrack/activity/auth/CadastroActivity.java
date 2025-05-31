@@ -12,17 +12,17 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.gametrack.R;
-import com.example.gametrack.data.model.remote.SteamResponseGetUser;
+import com.example.gametrack.data.model.remote.SteamResponseUsurario;
 import com.example.gametrack.data.model.local.Usuario;
 import com.example.gametrack.data.repository.UsuarioRepository;
-import com.example.gametrack.service.SteamValidator;
+import com.example.gametrack.service.SteamService;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.Gson;
 
 import org.json.JSONObject;
 
 import java.util.List;
+import java.util.Objects;
 
 public class CadastroActivity extends AppCompatActivity {
 
@@ -58,15 +58,15 @@ public class CadastroActivity extends AppCompatActivity {
                 return;
             }
 
-            SteamValidator steamValidator = new SteamValidator(this);
+            SteamService steamValidator = new SteamService(this);
 
-            steamValidator.validateSteamId(steamId, new SteamValidator.SteamValidationCallback() {
+            steamValidator.bucarUsuario(steamId, new SteamService.SteamValidationCallback() {
                 @Override
                 public void onValid(JSONObject steamData) {
                     Gson gson = new Gson();
-                    SteamResponseGetUser steamResponse = gson.fromJson(steamData.toString(), SteamResponseGetUser.class);
+                    SteamResponseUsurario steamResponse = gson.fromJson(steamData.toString(), SteamResponseUsurario.class);
 
-                    List<SteamResponseGetUser.Player> players = steamResponse.getResponse().getPlayers();
+                    List<SteamResponseUsurario.Player> players = steamResponse.getResponse().getPlayers();
 
                     if (!senha.equals(confirmarSenha)) {
                         Toast.makeText(CadastroActivity.this, "As senhas não coincidem", Toast.LENGTH_SHORT).show();
@@ -107,14 +107,14 @@ public class CadastroActivity extends AppCompatActivity {
         autenticacao.createUserWithEmailAndPassword(email, senha)
                 .addOnCompleteListener(this, tarefa -> {
                     if (tarefa.isSuccessful()) {
-                        FirebaseUser usuario = autenticacao.getCurrentUser();
+//                        FirebaseUser usuario = autenticacao.getCurrentUser();
                         Toast.makeText(CadastroActivity.this, "Cadastro realizado com sucesso!", Toast.LENGTH_SHORT).show();
 
                         Intent intent = new Intent(CadastroActivity.this, LoginActivity.class);
                         startActivity(intent);
                         finish();
                     } else {
-                        Toast.makeText(CadastroActivity.this, "Erro ao cadastrar: " + tarefa.getException().getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(CadastroActivity.this, "Erro ao cadastrar: " + Objects.requireNonNull(tarefa.getException()).getMessage(), Toast.LENGTH_LONG).show();
                         Log.e("Cadastro", "Erro ao cadastrar", tarefa.getException());
                     }
                 });

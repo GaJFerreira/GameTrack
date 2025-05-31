@@ -36,7 +36,7 @@ public class ApiService {
 
     public void get(String url, Map<String, String> headers, ApiCallback callback) {
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
-                response -> callback.onSuccess(response),
+                callback::onSuccess,
                 error -> callback.onError(parseVolleyError(error))
         ) {
             @Override
@@ -50,7 +50,7 @@ public class ApiService {
 
     public void post(String url, JSONObject jsonBody, Map<String, String> headers, ApiCallback callback) {
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, jsonBody,
-                response -> callback.onSuccess(response),
+                callback::onSuccess,
                 error -> callback.onError(parseVolleyError(error))
         ) {
             @Override

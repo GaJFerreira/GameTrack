@@ -16,10 +16,6 @@ public class UsuarioRepository {
         this.usuarioDao = new UsuarioDao(context);
     }
 
-    public UsuarioRepository(iUsuario usuarioDao) {
-        this.usuarioDao = usuarioDao;
-    }
-
     public void salvarUsuario(Usuario usuario) {
         usuarioDao.salvarUsuario(usuario);
     }
