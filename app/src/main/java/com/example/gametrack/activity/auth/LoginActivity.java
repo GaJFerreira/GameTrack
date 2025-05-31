@@ -1,5 +1,6 @@
 package com.example.gametrack.activity.auth;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,13 +11,16 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.gametrack.App;
 import com.example.gametrack.activity.MainActivity;
 import com.example.gametrack.R;
+import com.example.gametrack.data.model.local.Usuario;
+import com.example.gametrack.data.repository.UsuarioRepository;
+import com.example.gametrack.data.storage.SecurePreferences;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
-
     private FirebaseAuth autenticacao;
     private static final String TAG = "LoginActivity";
 
@@ -29,11 +33,11 @@ public class LoginActivity extends AppCompatActivity {
 
         FirebaseUser usuarioAtual = autenticacao.getCurrentUser();
 
-//        if (usuarioAtual != null) {
-//            startActivity(new Intent(LoginActivity.this, MainActivity.class));
-//            finish();
-//            return;
-//        }
+        if (usuarioAtual != null) {
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            finish();
+            return;
+        }
 
         EditText emailEditText = findViewById(R.id.emailEditText);
         EditText senhaEditText = findViewById(R.id.senhaEditText);
@@ -55,6 +59,7 @@ public class LoginActivity extends AppCompatActivity {
         cadastroText.setOnClickListener(v -> {
             Intent intent = new Intent(LoginActivity.this, CadastroActivity.class);
             startActivity(intent);
+            finish();
         });
     }
 
@@ -64,6 +69,7 @@ public class LoginActivity extends AppCompatActivity {
                     btnLogin.setEnabled(true);
                     if (tarefa.isSuccessful()) {
                         Log.d(TAG, "entrarComEmail:sucesso");
+                        this.salvarSteamIdNaSessao(email);
                         startActivity(new Intent(LoginActivity.this, MainActivity.class));
                         finish();
                     } else {
@@ -72,5 +78,19 @@ public class LoginActivity extends AppCompatActivity {
                                 Toast.LENGTH_SHORT).show();
                     }
                 });
+    }
+
+    private void salvarSteamIdNaSessao(String email) {
+        Context context = App.getContext();
+
+        UsuarioRepository usuarioRepository = new UsuarioRepository(context);
+        Usuario usuario = usuarioRepository.buscarUsuarioPorEmail(email);
+
+        if (usuario != null && usuario.getSteamId() != null) {
+            SecurePreferences.save("steamid", usuario.getSteamId());
+            Log.d(TAG, "Steam ID salvo com sucesso: " + usuario.getSteamId());
+        } else {
+            Log.e(TAG, "Usuário ou Steam ID não encontrado para o email: " + email);
+        }
     }
 }

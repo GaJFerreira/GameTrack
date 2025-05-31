@@ -1,4 +1,4 @@
-package com.example.gametrack.data.remote;
+package com.example.gametrack.utils;
 
 import android.content.Context;
 

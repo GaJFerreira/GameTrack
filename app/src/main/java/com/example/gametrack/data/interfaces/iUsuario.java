@@ -1,6 +1,6 @@
 package com.example.gametrack.data.interfaces;
 
-import com.example.gametrack.data.model.Usuario;
+import com.example.gametrack.data.model.local.Usuario;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ public interface iUsuario {
 
     void excluirUsuario(long id);
 
-    Usuario buscarUsuarioPorId(long id);
+    Usuario buscarUsuarioPorEmail(String email);
 
     List<Usuario> buscarTodosUsuarios();
 }

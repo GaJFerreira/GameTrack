@@ -5,7 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.example.gametrack.data.model.Meta;
+import com.example.gametrack.data.model.local.Meta;
 import com.example.gametrack.data.interfaces.iMeta;
 import com.example.gametrack.utils.ConexaoDb;
 

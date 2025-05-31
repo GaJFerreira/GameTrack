@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.example.gametrack.data.interfaces.iUsuario;
 import com.example.gametrack.data.local.ConexaoDb;
-import com.example.gametrack.data.model.Usuario;
+import com.example.gametrack.data.model.local.Usuario;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +24,8 @@ public class UsuarioDao implements iUsuario {
         ContentValues values = new ContentValues();
         values.put("nome", usuario.getNome());
         values.put("steamId", usuario.getSteamId());
-        values.put("imagemPerfil", "f"); // ou usuario.getImagemPerfil() se preferir
+        values.put("email", usuario.getEmail());
+        values.put("imagemPerfil", usuario.getImagemPerfil());
 
         conexao.insert("usuario", null, values);
     }
@@ -34,6 +35,7 @@ public class UsuarioDao implements iUsuario {
         ContentValues values = new ContentValues();
         values.put("nome", usuario.getNome());
         values.put("steamId", usuario.getSteamId());
+        values.put("email", usuario.getEmail());
         values.put("imagemPerfil", usuario.getImagemPerfil());
 
         conexao.update("usuario", values, "id = ?", new String[]{String.valueOf(usuario.getId())});
@@ -45,12 +47,12 @@ public class UsuarioDao implements iUsuario {
     }
 
     @Override
-    public Usuario buscarUsuarioPorId(long id) {
+    public Usuario buscarUsuarioPorEmail(String email) {
         Cursor cursor = conexao.query(
                 "usuario",
-                new String[]{"id", "nome", "steamId", "imagemPerfil"},
-                "id = ?",
-                new String[]{String.valueOf(id)},
+                new String[]{"id", "nome", "steamId", "email", "imagemPerfil"},
+                "email = ?",
+                new String[]{String.valueOf(email)},
                 null,
                 null,
                 null
@@ -62,6 +64,7 @@ public class UsuarioDao implements iUsuario {
                     cursor.getLong(cursor.getColumnIndexOrThrow("id")),
                     cursor.getString(cursor.getColumnIndexOrThrow("nome")),
                     cursor.getString(cursor.getColumnIndexOrThrow("steamId")),
+                    cursor.getString(cursor.getColumnIndexOrThrow("email")),
                     cursor.getString(cursor.getColumnIndexOrThrow("imagemPerfil"))
             );
         }
@@ -75,7 +78,7 @@ public class UsuarioDao implements iUsuario {
 
         Cursor cursor = conexao.query(
                 "usuario",
-                new String[]{"id", "nome", "steamId", "imagemPerfil"},
+                new String[]{"id", "nome", "steamId", "email", "imagemPerfil"},
                 null,
                 null,
                 null,
@@ -89,6 +92,7 @@ public class UsuarioDao implements iUsuario {
                         cursor.getLong(cursor.getColumnIndexOrThrow("id")),
                         cursor.getString(cursor.getColumnIndexOrThrow("nome")),
                         cursor.getString(cursor.getColumnIndexOrThrow("steamId")),
+                        cursor.getString(cursor.getColumnIndexOrThrow("email")),
                         cursor.getString(cursor.getColumnIndexOrThrow("imagemPerfil"))
                 );
                 usuarios.add(usuario);

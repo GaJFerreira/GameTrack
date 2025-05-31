@@ -3,7 +3,7 @@ package com.example.gametrack.service;
 import android.content.Context;
 import android.util.Log;
 
-import com.example.gametrack.data.remote.ApiService;
+import com.example.gametrack.utils.ApiService;
 
 import org.json.JSONObject;
 

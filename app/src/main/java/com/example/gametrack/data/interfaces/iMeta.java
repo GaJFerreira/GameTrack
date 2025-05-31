@@ -1,6 +1,6 @@
 package com.example.gametrack.data.interfaces;
 
-import com.example.gametrack.data.model.Meta;
+import com.example.gametrack.data.model.local.Meta;
 
 import java.util.List;
 

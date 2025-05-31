@@ -1,7 +1,5 @@
 package com.example.gametrack.activity.auth;
 
-import static android.content.ContentValues.TAG;
-
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,9 +12,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.gametrack.R;
-import com.example.gametrack.data.model.SteamResponseGetUser;
-import com.example.gametrack.data.model.Usuario;
-import com.example.gametrack.data.remote.ApiService;
+import com.example.gametrack.data.model.remote.SteamResponseGetUser;
+import com.example.gametrack.data.model.local.Usuario;
 import com.example.gametrack.data.repository.UsuarioRepository;
 import com.example.gametrack.service.SteamValidator;
 import com.google.firebase.auth.FirebaseAuth;
@@ -25,9 +22,7 @@ import com.google.gson.Gson;
 
 import org.json.JSONObject;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class CadastroActivity extends AppCompatActivity {
 
@@ -73,20 +68,20 @@ public class CadastroActivity extends AppCompatActivity {
 
                     List<SteamResponseGetUser.Player> players = steamResponse.getResponse().getPlayers();
 
-                    if (players == null || players.isEmpty()) {
-                        Log.e("SteamValidator", "Nenhum jogador encontrado para o Steam ID informado.");
+                    if (!senha.equals(confirmarSenha)) {
+                        Toast.makeText(CadastroActivity.this, "As senhas não coincidem", Toast.LENGTH_SHORT).show();
                         return;
                     }
 
-                    if (!senha.equals(confirmarSenha)) {
-                        Toast.makeText(CadastroActivity.this, "As senhas não coincidem", Toast.LENGTH_SHORT).show();
+                    if (players == null || players.isEmpty()) {
+                        Toast.makeText(CadastroActivity.this, "Nenhum jogador encontrado para o Steam ID informado.", Toast.LENGTH_LONG).show();
                         return;
                     }
 
                     Usuario usuario = null;
 
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM) {
-                        usuario = new Usuario(nome, steamId, players.getFirst().getAvatarmedium());
+                        usuario = new Usuario(nome, steamId, email, players.getFirst().getAvatarmedium());
                     }
 
                     usuarioRepository.salvarUsuario(usuario);

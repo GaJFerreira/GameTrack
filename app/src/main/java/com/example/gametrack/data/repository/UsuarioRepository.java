@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.example.gametrack.data.dao.UsuarioDao;
 import com.example.gametrack.data.interfaces.iUsuario;
-import com.example.gametrack.data.model.Usuario;
+import com.example.gametrack.data.model.local.Usuario;
 
 import java.util.List;
 
@@ -32,8 +32,8 @@ public class UsuarioRepository {
         usuarioDao.excluirUsuario(id);
     }
 
-    public Usuario buscarUsuarioPorId(long id) {
-        return usuarioDao.buscarUsuarioPorId(id);
+    public Usuario buscarUsuarioPorEmail(String email) {
+        return usuarioDao.buscarUsuarioPorEmail(email);
     }
 
     public List<Usuario> buscarTodosUsuarios() {

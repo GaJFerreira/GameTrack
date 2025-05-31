@@ -1,4 +1,4 @@
-package com.example.gametrack.data.model;
+package com.example.gametrack.data.model.local;
 
 public class Meta {
 
