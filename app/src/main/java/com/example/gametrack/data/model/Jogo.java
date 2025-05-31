@@ -15,10 +15,6 @@ public class Jogo {
     private String dtLancamento;
     private int conquistasTotais;
 
-    public Jogo(){
-
-    }
-
     public Jogo(String appSteamId, String capa, int conquistasTotais, String descricao, String desenvolvedor, String dtLancamento, String genero, String icone, long id, String plataforma, String publisher, String titulo) {
         this.appSteamId = appSteamId;
         this.capa = capa;

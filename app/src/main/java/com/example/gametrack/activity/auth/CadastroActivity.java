@@ -1,5 +1,7 @@
 package com.example.gametrack.activity.auth;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,42 +13,91 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.gametrack.R;
+import com.example.gametrack.data.model.SteamResponseGetUser;
+import com.example.gametrack.data.model.Usuario;
+import com.example.gametrack.data.remote.ApiService;
+import com.example.gametrack.data.repository.UsuarioRepository;
+import com.example.gametrack.service.SteamValidator;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.gson.Gson;
+
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class CadastroActivity extends AppCompatActivity {
 
-    private FirebaseAuth autenticacao;
+    private final FirebaseAuth autenticacao = FirebaseAuth.getInstance();
+    private UsuarioRepository usuarioRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro);
 
-        autenticacao = FirebaseAuth.getInstance();
+        usuarioRepository = new UsuarioRepository(getApplicationContext());
 
         EditText emailEditText = findViewById(R.id.emailEditText);
         EditText senhaEditText = findViewById(R.id.senhaEditText);
         EditText confirmarSenhaEditText = findViewById(R.id.confirmarSenhaEditText);
+
+        EditText nomeEditText = findViewById(R.id.nomeEditText);
+        EditText steamIdEditText = findViewById(R.id.steamIdEditText);
+
         Button cadastrarButton = findViewById(R.id.cadastrarButton);
         TextView loginText = findViewById(R.id.loginText);
 
         cadastrarButton.setOnClickListener(v -> {
+            String nome = nomeEditText.getText().toString().trim();
             String email = emailEditText.getText().toString().trim();
+            String steamId = steamIdEditText.getText().toString().trim();
             String senha = senhaEditText.getText().toString().trim();
             String confirmarSenha = confirmarSenhaEditText.getText().toString().trim();
 
-            if (email.isEmpty() || senha.isEmpty() || confirmarSenha.isEmpty()) {
-                Toast.makeText(this, "Preencha todos os campos", Toast.LENGTH_SHORT).show();
-                return;
-            }
+//            if (email.isEmpty() || nome.isEmpty() || steamId.isEmpty() || senha.isEmpty() || confirmarSenha.isEmpty()) {
+//                Toast.makeText(this, "Preencha todos os campos", Toast.LENGTH_SHORT).show();
+//                return;
+//            }
 
-            if (!senha.equals(confirmarSenha)) {
-                Toast.makeText(this, "As senhas não coincidem", Toast.LENGTH_SHORT).show();
-                return;
-            }
+            SteamValidator steamValidator = new SteamValidator(this);
 
-            cadastrarUsuario(email, senha);
+            steamValidator.validateSteamId(steamId, new SteamValidator.SteamValidationCallback() {
+                @Override
+                public void onValid(JSONObject steamData) {
+                    Gson gson = new Gson();
+                    SteamResponseGetUser steamResponse = gson.fromJson(steamData.toString(), SteamResponseGetUser.class);
+
+                    List<SteamResponseGetUser.Player> players = steamResponse.getResponse().getPlayers();
+
+                    if (players == null || players.isEmpty()) {
+                        Log.e("SteamValidator", "Nenhum jogador encontrado para o Steam ID informado.");
+                        return;
+                    }
+
+                    if (!senha.equals(confirmarSenha)) {
+                        Toast.makeText(CadastroActivity.this, "As senhas não coincidem", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    Usuario usuario = new Usuario(nome, steamId, players.getFirst().getAvatarmedium());
+                    usuarioRepository.salvarUsuario(usuario);
+
+                    List<Usuario> usuarios = usuarioRepository.buscarTodosUsuarios();
+                    for (Usuario usuar : usuarios) {
+                        Log.d("UsuarioInfo", usuar.toString());
+                    }
+
+                    cadastrarUsuario(email, senha);
+                }
+
+                @Override
+                public void onInvalid(String errorMessage) {
+                    Toast.makeText(CadastroActivity.this, "Erro ao validar Steam ID: " + errorMessage, Toast.LENGTH_LONG).show();
+                }
+            });
         });
 
         loginText.setOnClickListener(v -> {

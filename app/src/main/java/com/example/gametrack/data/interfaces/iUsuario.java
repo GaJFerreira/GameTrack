@@ -1,4 +1,4 @@
-package com.example.gametrack.interfaces;
+package com.example.gametrack.data.interfaces;
 
 import com.example.gametrack.data.model.Usuario;
 
@@ -14,8 +14,5 @@ public interface iUsuario {
 
     Usuario buscarUsuarioPorId(long id);
 
-    Usuario buscarUsuarioPorEmail(String email);
-
     List<Usuario> buscarTodosUsuarios();
-
 }

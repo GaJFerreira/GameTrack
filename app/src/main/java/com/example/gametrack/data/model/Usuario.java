@@ -1,24 +1,25 @@
 package com.example.gametrack.data.model;
 
+import androidx.annotation.NonNull;
+
 public class Usuario {
 
     private long id;
-    private String email;
-    private String senha;
     private String nome;
     private String steamId;
     private String imagemPerfil; //url
 
-    public Usuario() {
-    }
-
-    public Usuario(long id, String nome, String steamId, String imagemPerfil, String senha, String email) {
+    public Usuario(long id, String nome, String steamId, String imagemPerfil) {
         this.id = id;
         this.nome = nome;
         this.steamId = steamId;
         this.imagemPerfil = imagemPerfil;
-        this.senha = senha;
-        this.email = email;
+    }
+
+    public Usuario(String nome, String steamId, String imagemPerfil) {
+        this.nome = nome;
+        this.steamId = steamId;
+        this.imagemPerfil = imagemPerfil;
     }
 
     public long getId() {
@@ -53,22 +54,7 @@ public class Usuario {
         this.imagemPerfil = imagemPerfil;
     }
 
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
+    @NonNull
     @Override
     public String toString() {
         return "Usuario{" +
@@ -76,10 +62,6 @@ public class Usuario {
                 ", nome='" + nome + '\'' +
                 ", steamId=" + steamId +
                 ", imagemPerfil='" + imagemPerfil + '\'' +
-                ", senha='" + senha + '\'' +
-                ", email='" + email + '\'' +
                 '}';
     }
-
-
 }
