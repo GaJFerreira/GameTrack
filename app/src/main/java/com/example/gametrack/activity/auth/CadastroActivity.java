@@ -3,6 +3,7 @@ package com.example.gametrack.activity.auth;
 import static android.content.ContentValues.TAG;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -57,10 +58,10 @@ public class CadastroActivity extends AppCompatActivity {
             String senha = senhaEditText.getText().toString().trim();
             String confirmarSenha = confirmarSenhaEditText.getText().toString().trim();
 
-//            if (email.isEmpty() || nome.isEmpty() || steamId.isEmpty() || senha.isEmpty() || confirmarSenha.isEmpty()) {
-//                Toast.makeText(this, "Preencha todos os campos", Toast.LENGTH_SHORT).show();
-//                return;
-//            }
+            if (email.isEmpty() || nome.isEmpty() || steamId.isEmpty() || senha.isEmpty() || confirmarSenha.isEmpty()) {
+                Toast.makeText(this, "Preencha todos os campos", Toast.LENGTH_SHORT).show();
+                return;
+            }
 
             SteamValidator steamValidator = new SteamValidator(this);
 
@@ -82,13 +83,13 @@ public class CadastroActivity extends AppCompatActivity {
                         return;
                     }
 
-                    Usuario usuario = new Usuario(nome, steamId, players.getFirst().getAvatarmedium());
-                    usuarioRepository.salvarUsuario(usuario);
+                    Usuario usuario = null;
 
-                    List<Usuario> usuarios = usuarioRepository.buscarTodosUsuarios();
-                    for (Usuario usuar : usuarios) {
-                        Log.d("UsuarioInfo", usuar.toString());
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM) {
+                        usuario = new Usuario(nome, steamId, players.getFirst().getAvatarmedium());
                     }
+
+                    usuarioRepository.salvarUsuario(usuario);
 
                     cadastrarUsuario(email, senha);
                 }
