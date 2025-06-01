@@ -5,13 +5,19 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.NavigationUI;
 
 import com.example.gametrack.App;
+import com.example.gametrack.R;
 import com.example.gametrack.data.model.local.Jogo;
 import com.example.gametrack.data.model.remote.SteamResponseBiblioteca;
 import com.example.gametrack.data.repository.JogoRepository;
 import com.example.gametrack.data.storage.SecurePreferences;
+import com.example.gametrack.databinding.ActivityMainBinding;
 import com.example.gametrack.service.SteamService;
 import com.example.gametrack.utils.AppExecutors;
 import com.google.gson.Gson;
@@ -22,13 +28,22 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    private ActivityMainBinding binding;
+    private NavHostFragment navHostFragment;
+    private NavController navController;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 //        Button btnCadastro;
 //
         super.onCreate(savedInstanceState);
-//        EdgeToEdge.enable(this);
-//        setContentView(R.layout.activity_main);
+        EdgeToEdge.enable(this);
+
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+
+        setContentView(binding.getRoot());
+
+        initNavigation();
 //
 //        UsuarioDao usuarioDao = new UsuarioDao();
 //
@@ -68,8 +83,8 @@ public class MainActivity extends AppCompatActivity {
 
 //        this.sincronizarBibliotecaSteam();
 
-        Intent intent = new Intent(MainActivity.this, PesquisaJogo.class);
-        startActivity(intent);
+//        Intent intent = new Intent(MainActivity.this, PesquisaJogo.class);
+//        startActivity(intent);
 //            }
 //        });
 //
@@ -77,37 +92,44 @@ public class MainActivity extends AppCompatActivity {
 //        new ConexaoDb(getApplicationContext(), "gametrack.db", null, 1);
     }
 
-    private void sincronizarBibliotecaSteam() {
-        SteamService steamValidator = new SteamService(App.getContext());
-        String steamId = SecurePreferences.get("steamid");
-        JogoRepository jogoRepository = new JogoRepository(App.getContext());
-
-        AppExecutors.getDatabaseExecutor().execute(() -> {
-            steamValidator.buscarBibliotecaDoUsuario(steamId, new SteamService.SteamValidationCallback() {
-                @Override
-                public void onValid(JSONObject steamData) {
-                    Gson gson = new Gson();
-                    SteamResponseBiblioteca steamResponse = gson.fromJson(steamData.toString(), SteamResponseBiblioteca.class);
-
-                    List<SteamResponseBiblioteca.Game> jogos = steamResponse.getResponse().getGames();
-
-                    for (SteamResponseBiblioteca.Game game : jogos) {
-                        Jogo jogo = new Jogo(
-                                game.getName(),                            // Nome do jogo
-                                game.getAppid(),                           // ID Steam
-                                "https://media.steampowered.com/steamcommunity/public/images/apps/"
-                                        + game.getAppid() + "/" + game.getImgIconUrl() + ".jpg" // URL do ícone
-                        );
-
-                        jogoRepository.salvarJogo(jogo);
-                    }
-                }
-
-                @Override
-                public void onInvalid(String errorMessage) {
-                    Toast.makeText(MainActivity.this, "Erro ao validar Steam ID: " + errorMessage, Toast.LENGTH_LONG).show();
-                }
-            });
-        });
+    private void initNavigation(){
+        navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+        navController  = navHostFragment.getNavController();
+        NavigationUI.setupWithNavController(binding.bottomNavigation, navController);
     }
+
+
+//    private void sincronizarBibliotecaSteam() {
+//        SteamService steamValidator = new SteamService(App.getContext());
+//        String steamId = SecurePreferences.get("steamid");
+//        JogoRepository jogoRepository = new JogoRepository(App.getContext());
+//
+//        AppExecutors.getDatabaseExecutor().execute(() -> {
+//            steamValidator.buscarBibliotecaDoUsuario(steamId, new SteamService.SteamValidationCallback() {
+//                @Override
+//                public void onValid(JSONObject steamData) {
+//                    Gson gson = new Gson();
+//                    SteamResponseBiblioteca steamResponse = gson.fromJson(steamData.toString(), SteamResponseBiblioteca.class);
+//
+//                    List<SteamResponseBiblioteca.Game> jogos = steamResponse.getResponse().getGames();
+//
+//                    for (SteamResponseBiblioteca.Game game : jogos) {
+//                        Jogo jogo = new Jogo(
+//                                game.getName(),                            // Nome do jogo
+//                                game.getAppid(),                           // ID Steam
+//                                "https://media.steampowered.com/steamcommunity/public/images/apps/"
+//                                        + game.getAppid() + "/" + game.getImgIconUrl() + ".jpg" // URL do ícone
+//                        );
+//
+//                        jogoRepository.salvarJogo(jogo);
+//                    }
+//                }
+//
+//                @Override
+//                public void onInvalid(String errorMessage) {
+//                    Toast.makeText(MainActivity.this, "Erro ao validar Steam ID: " + errorMessage, Toast.LENGTH_LONG).show();
+//                }
+//            });
+//        });
+//    }
 }

@@ -30,6 +30,7 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+    viewBinding.enable = true
 }
 
 dependencies {
@@ -43,6 +44,9 @@ dependencies {
     implementation(libs.google.gson)
     implementation(libs.security.crypto)
     implementation(libs.github.glide)
+    implementation(libs.androidx.security.crypto)
+    implementation(libs.androidx.navigation.fragment)
+    implementation(libs.androidx.navigation.ui)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
