@@ -17,12 +17,18 @@ import java.util.List;
 
 public class JogoAdapter extends RecyclerView.Adapter<JogoAdapter.ItemViewHolder> {
 
+    public interface OnItemClickListener {
+        void onItemClick(JogoLayout jogo);
+    }
+
     private final List<JogoLayout> jogoList;
     private final Context context;
+    private final OnItemClickListener listener;
 
-    public JogoAdapter(List<JogoLayout> jogoList, Context context) {
+    public JogoAdapter(List<JogoLayout> jogoList, Context context, OnItemClickListener listener) {
         this.jogoList = jogoList;
         this.context = context;
+        this.listener = listener;
     }
 
     @NonNull
@@ -35,7 +41,16 @@ public class JogoAdapter extends RecyclerView.Adapter<JogoAdapter.ItemViewHolder
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
         JogoLayout item = jogoList.get(position);
-        Glide.with(context).load(item.getImagemUrl()).into(holder.imageView);
+        Glide.with(context)
+                .load(item.getImagemUrl() + "/library_600x900_2x.jpg")
+                .error(item.getImagemUrl() + "/header.jpg")
+                .into(holder.imageView);
+
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onItemClick(item);
+            }
+        });
     }
 
     @Override
@@ -45,6 +60,7 @@ public class JogoAdapter extends RecyclerView.Adapter<JogoAdapter.ItemViewHolder
 
     public static class ItemViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
+
         public ItemViewHolder(@NonNull View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.item_image);

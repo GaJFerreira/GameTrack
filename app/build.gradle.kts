@@ -43,6 +43,8 @@ dependencies {
     implementation(libs.google.gson)
     implementation(libs.security.crypto)
     implementation(libs.github.glide)
+    implementation(libs.media3.exoplayer)
+    implementation(libs.media3.ui)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

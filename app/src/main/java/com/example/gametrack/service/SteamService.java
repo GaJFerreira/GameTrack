@@ -62,4 +62,23 @@ public class SteamService {
             }
         });
     }
+
+    public void buscarDetalhesDoJogo(long appSteamId, SteamValidationCallback callback) {
+        String url = "http://10.0.2.2:8000/game/" + appSteamId;
+
+        Map<String, String> headers = new HashMap<>();
+
+        ApiService.getInstance(context).get(url, headers, new ApiService.ApiCallback() {
+            @Override
+            public void onSuccess(JSONObject response) {
+                callback.onValid(response);
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                Log.e(TAG, "Erro ao buscar detalhes do jogo: " + errorMessage);
+                callback.onInvalid(errorMessage);
+            }
+        });
+    }
 }

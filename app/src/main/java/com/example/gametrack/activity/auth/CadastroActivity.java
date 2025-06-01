@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.gametrack.App;
 import com.example.gametrack.R;
 import com.example.gametrack.data.model.remote.SteamResponseUsurario;
 import com.example.gametrack.data.model.local.Usuario;
@@ -54,11 +55,11 @@ public class CadastroActivity extends AppCompatActivity {
             String confirmarSenha = confirmarSenhaEditText.getText().toString().trim();
 
             if (email.isEmpty() || nome.isEmpty() || steamId.isEmpty() || senha.isEmpty() || confirmarSenha.isEmpty()) {
-                Toast.makeText(this, "Preencha todos os campos", Toast.LENGTH_SHORT).show();
+                Toast.makeText(App.getContext(), "Preencha todos os campos", Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            SteamService steamValidator = new SteamService(this);
+            SteamService steamValidator = new SteamService(App.getContext());
 
             steamValidator.bucarUsuario(steamId, new SteamService.SteamValidationCallback() {
                 @Override
@@ -81,7 +82,7 @@ public class CadastroActivity extends AppCompatActivity {
                     Usuario usuario = null;
 
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM) {
-                        usuario = new Usuario(nome, steamId, email, players.getFirst().getAvatarmedium());
+                        usuario = new Usuario(nome, steamId.split(",")[0], email, players.getFirst().getAvatarmedium());
                     }
 
                     usuarioRepository.salvarUsuario(usuario);

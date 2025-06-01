@@ -9,10 +9,10 @@
         android:id="@+id/item_image"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:scaleType="centerCrop"
+        android:background="#212121"
         app:layout_constraintDimensionRatio="2:3"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
