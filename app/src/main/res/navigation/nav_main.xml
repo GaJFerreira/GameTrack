@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_main"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_profile"
+        android:name="com.example.gametrack.fragments.UsuarioFragment"
+        android:label="fragment_usuario"
+        tools:layout="@layout/fragment_usuario" />
+
+    <fragment
+        android:id="@+id/nav_search"
+        android:name="com.example.gametrack.fragments.PesquisarFragment"
+        android:label="fragment_pesquisar"
+        tools:layout="@layout/fragment_pesquisar" />
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.example.gametrack.fragments.InicioFragment"
+        android:label="InicioFragment" />
+
+    <fragment
+        android:id="@+id/nav_meta"
+        android:name="com.example.gametrack.fragments.MetasFragment"
+        android:label="fragment_meta"
+        tools:layout="@layout/fragment_meta" />
+
+    <action
+        android:id="@+id/action_metasFragment_to_criarMetaFragment"
+        app:destination="@+id/novaMetaFragment" />
+
+    <fragment
+        android:id="@+id/novaMetaFragment"
+        android:name="com.example.gametrack.fragments.NovaMetaFragment"
+        android:label="NovaMetaFragment" />
+
+
+</navigation>

@@ -3,7 +3,7 @@ package com.example.gametrack.data.model.local;
 public class Meta {
 
     private long id;
-    private long bibliotecaId;
+    private long jogoId;
     private Tipo tipo;
     private String valorMeta;
     private String progressoAtual;
@@ -15,9 +15,20 @@ public class Meta {
     public Meta() {
     }
 
-    public Meta(long id, long bibliotecaId, Tipo tipo, String valorMeta, String progressoAtual, String dataLimite, Prioridade prioridade, String observacao, Status status) {
+    public Meta(long jogoId, Tipo tipo, String valorMeta, String progressoAtual, String dataLimite, Prioridade prioridade, String observacao, Status status) {
+        this.jogoId = jogoId;
+        this.tipo = tipo;
+        this.valorMeta = valorMeta;
+        this.progressoAtual = progressoAtual;
+        this.dataLimite = dataLimite;
+        this.prioridade = prioridade;
+        this.observacao = observacao;
+        this.status = status;
+    }
+
+    public Meta(long id, long jogoId, Tipo tipo, String valorMeta, String progressoAtual, String dataLimite, Prioridade prioridade, String observacao, Status status) {
         this.id = id;
-        this.bibliotecaId = bibliotecaId;
+        this.jogoId = jogoId;
         this.tipo = tipo;
         this.valorMeta = valorMeta;
         this.progressoAtual = progressoAtual;
@@ -77,11 +88,11 @@ public class Meta {
     }
 
     public long getBibliotecaId() {
-        return bibliotecaId;
+        return jogoId;
     }
 
     public void setBibliotecaId(long bibliotecaId) {
-        this.bibliotecaId = bibliotecaId;
+        this.jogoId = bibliotecaId;
     }
 
     public Tipo getTipo() {
@@ -144,7 +155,7 @@ public class Meta {
     public String toString() {
         return "Meta{" +
                 "id=" + id +
-                ", bibliotecaId=" + bibliotecaId +
+                ", bibliotecaId=" + jogoId +
                 ", tipo=" + tipo +
                 ", valorMeta='" + valorMeta + '\'' +
                 ", progressoAtual='" + progressoAtual + '\'' +

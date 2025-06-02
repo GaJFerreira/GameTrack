@@ -1,22 +1,33 @@
 package com.example.gametrack.data.dao;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.example.gametrack.data.model.local.Meta;
 import com.example.gametrack.data.interfaces.iMeta;
-import com.example.gametrack.utils.ConexaoDb;
+//import com.example.gametrack.utils.ConexaoDb;
+import com.example.gametrack.data.local.ConexaoDb;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MetaDao implements iMeta {
+
+    private final SQLiteDatabase conexao;
+
+    public MetaDao(Context context) {
+
+        this.conexao = ConexaoDb.getInstance(context);
+
+    }
+
     @Override
     public void salvarMeta(Meta meta) {
         ContentValues values = new ContentValues();
-        values.put("bibliotecaId", meta.getBibliotecaId());
+        values.put("jogoId", meta.getBibliotecaId());
         values.put("tipo", meta.getTipo().name());
         values.put("valorMeta", meta.getValorMeta());
         values.put("progressoAtual", meta.getProgressoAtual());
@@ -25,7 +36,6 @@ public class MetaDao implements iMeta {
         values.put("observacao", meta.getObservacao());
         values.put("status", meta.getStatus().name());
 
-        SQLiteDatabase conexao = ConexaoDb.getInstance();
         conexao.insert("meta", null, values);
     }
 
@@ -33,7 +43,7 @@ public class MetaDao implements iMeta {
     public void atualizarMeta(Meta meta) {
         ContentValues values = new ContentValues();
         values.put("id", meta.getId());
-        values.put("bibliotecaId", meta.getBibliotecaId());
+        values.put("jogoId", meta.getBibliotecaId());
         values.put("tipo", meta.getTipo().name());
         values.put("valorMeta", meta.getValorMeta());
         values.put("progressoAtual", meta.getProgressoAtual());
@@ -42,7 +52,6 @@ public class MetaDao implements iMeta {
         values.put("observacao", meta.getObservacao());
         values.put("status", meta.getStatus().name());
 
-        SQLiteDatabase conexao = ConexaoDb.getInstance();
         conexao.update("meta", values, "id = ?", new String[]{String.valueOf(meta.getId())});
 
     }
@@ -51,17 +60,17 @@ public class MetaDao implements iMeta {
     public void excluirMeta(long id) {
         ContentValues values = new ContentValues();
 
-        SQLiteDatabase conexao = ConexaoDb.getInstance();
+       // SQLiteDatabase conexao = ConexaoDb.getInstance();
         conexao.delete("meta", "id = ?", new String[]{String.valueOf(id)});
 
     }
 
     @Override
     public Meta biscarPorId(long id) {
-        SQLiteDatabase conexao = ConexaoDb.getInstance();
+
         Meta meta = null;
         String[] args = {String.valueOf(id)};
-        String[] colunas = {"id", "bibliotecaId", "tipo", "valorMeta", "progressoAtual", "dataFim", "prioridade", "observacao", "status"};
+        String[] colunas = {"id", "jogoId", "tipo", "valorMeta", "progressoAtual", "dataFim", "prioridade", "observacao", "status"};
 
         Cursor cursor = null;
 
@@ -85,7 +94,7 @@ public class MetaDao implements iMeta {
 
             if (cursor == null || cursor.getCount() == 0) {
                 int idCol = cursor.getColumnIndexOrThrow("id");
-                int bibliotecaIdCol = cursor.getColumnIndexOrThrow("bibliotecaId");
+                int jogoIdCol = cursor.getColumnIndexOrThrow("jogoId");
                 int tipoCol = cursor.getColumnIndexOrThrow("tipo");
                 int valorMetaCol = cursor.getColumnIndexOrThrow("valorMeta");
                 int progressoAtualCol = cursor.getColumnIndexOrThrow("progressoAtual");
@@ -101,7 +110,7 @@ public class MetaDao implements iMeta {
 
                 meta = new Meta(
                         cursor.getLong(idCol),
-                        cursor.getLong(bibliotecaIdCol),
+                        cursor.getLong(jogoIdCol),
                         tipoEnum,
                         cursor.getString(valorMetaCol),
                         cursor.getString(progressoAtualCol),
@@ -131,11 +140,11 @@ public class MetaDao implements iMeta {
 
     @Override
     public List<Meta> listarMetas() {
-        SQLiteDatabase conexao = ConexaoDb.getInstance();
+
         List<Meta> metas = new ArrayList<>();
 
         String slq = "SELECT * FROM meta";
-        String colunas[] = {"id", "bibliotecaId", "tipo", "valorMeta", "progressoAtual", "dataFim", "prioridade", "observacao", "status"};
+        String colunas[] = {"id", "jogoId", "tipo", "valorMeta", "progressoAtual", "dataFim", "prioridade", "observacao", "status"};
 
         Cursor cursor = conexao.rawQuery(slq, null);
 
@@ -143,7 +152,7 @@ public class MetaDao implements iMeta {
             do {
                 Meta meta = new Meta(
                         cursor.getLong(cursor.getColumnIndexOrThrow("id")),
-                        cursor.getLong(cursor.getColumnIndexOrThrow("bibliotecaId")),
+                        cursor.getLong(cursor.getColumnIndexOrThrow("jogoId")),
                         Meta.Tipo.valueOf(cursor.getString(cursor.getColumnIndexOrThrow("tipo"))),
                         cursor.getString(cursor.getColumnIndexOrThrow("valorMeta")),
                         cursor.getString(cursor.getColumnIndexOrThrow("progressoAtual")),

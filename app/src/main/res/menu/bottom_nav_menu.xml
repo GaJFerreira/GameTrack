@@ -1,14 +1,27 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-<!--    <item-->
-<!--        android:id="@+id/nav_home"-->
-<!--        android:icon="@drawable/ic_home"-->
-<!--        android:title="Início" />-->
-<!--    <item-->
-<!--        android:id="@+id/nav_search"-->
-<!--        android:icon="@drawable/ic_search"-->
-<!--        android:title="Buscar" />-->
-<!--    <item-->
-<!--        android:id="@+id/nav_profile"-->
-<!--        android:icon="@drawable/ic_person"-->
-<!--        android:title="Perfil" />-->
+    <item
+        android:id="@+id/nav_home"
+        android:icon="@drawable/ic_home"
+        android:title="@string/home_title" />
+
+    <item
+        android:id="@+id/nav_search"
+        android:icon="@drawable/ic_search"
+        android:title="@string/search_title" />
+
+    <item
+        android:id="@+id/nav_games"
+        android:icon="@drawable/ic_games"
+        android:title="@string/games_title" />
+
+    <item
+        android:id="@+id/nav_meta"
+        android:icon="@drawable/ic_meta"
+        android:title="@string/meta_title" />
+
+    <item
+        android:id="@+id/nav_profile"
+        android:icon="@drawable/ic_profile"
+        android:title="@string/profile_title" />
+
 </menu>

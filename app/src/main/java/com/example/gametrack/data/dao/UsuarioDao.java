@@ -16,6 +16,7 @@ public class UsuarioDao implements iUsuario {
 
     private final SQLiteDatabase conexao;
     public UsuarioDao(Context context) {
+
         this.conexao = ConexaoDb.getInstance(context);
     }
 
