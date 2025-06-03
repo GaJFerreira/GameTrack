@@ -8,7 +8,6 @@ import android.util.Log;
 
 import com.example.gametrack.data.model.local.Meta;
 import com.example.gametrack.data.interfaces.iMeta;
-//import com.example.gametrack.utils.ConexaoDb;
 import com.example.gametrack.data.local.ConexaoDb;
 
 import java.util.ArrayList;

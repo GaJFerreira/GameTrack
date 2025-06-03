@@ -22,12 +22,23 @@ public class JogoDao implements iJogo {
 
     @Override
     public void salvarJogo(Jogo jogo) {
-        ContentValues values = new ContentValues();
-        values.put("appSteamId", jogo.getAppSteamId());
-        values.put("titulo", jogo.getTitulo());
-        values.put("icone", jogo.getIcone());
+        String[] colunas = {"appSteamId"};
+        String selection = "appSteamId = ?";
+        String[] selectionArgs = { String.valueOf(jogo.getAppSteamId()) };
 
-        conexao.insert("jogo", null, values);
+        Cursor cursor = conexao.query("jogo", colunas, selection, selectionArgs, null, null, null);
+
+        boolean jogoExiste = cursor.moveToFirst();
+        cursor.close();
+
+        if (!jogoExiste) {
+            ContentValues values = new ContentValues();
+            values.put("appSteamId", jogo.getAppSteamId());
+            values.put("titulo", jogo.getTitulo());
+            values.put("icone", jogo.getIcone());
+
+            conexao.insert("jogo", null, values);
+        }
     }
 
     @Override

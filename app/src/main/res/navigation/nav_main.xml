@@ -37,5 +37,13 @@
         android:name="com.example.gametrack.fragments.NovaMetaFragment"
         android:label="NovaMetaFragment" />
 
+    <fragment
+        android:id="@+id/detalhesFragment"
+        android:name="com.example.gametrack.fragments.DetalhesFragment"
+        android:label="Detalhes"
+        tools:layout="@layout/detalhes_jogo" />
 
+    <action
+        android:id="@+id/action_nav_search_to_detalhesFragment"
+        app:destination="@id/detalhesFragment" />
 </navigation>

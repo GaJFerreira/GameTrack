@@ -1,5 +1,4 @@
-// app/src/main/java/com/example/gametrack/fragments/UsuarioFragment.java
-package com.example.gametrack.fragments; // Ou o pacote onde você colocou
+package com.example.gametrack.fragments;
 
 import android.os.Bundle;
 import android.os.Handler;

@@ -20,13 +20,18 @@ public class SincronizarBibliotecaSteamService {
     private final String steamId;
     private final JogoRepository jogoRepository;
 
+    public interface Callback {
+        void onSuccess();
+        void onError(String error);
+    }
+
     public SincronizarBibliotecaSteamService() {
         this.steamValidator = new SteamService(App.getContext());
         this.steamId = SecurePreferences.get("steamid");
         this.jogoRepository = new JogoRepository(App.getContext());
     }
 
-    public void sincronizar() {
+    public void sincronizar(Callback callback) {
         AppExecutors.getDatabaseExecutor().execute(() -> {
             steamValidator.buscarBibliotecaDoUsuario(steamId, new SteamService.SteamValidationCallback() {
                 @Override
@@ -46,11 +51,17 @@ public class SincronizarBibliotecaSteamService {
 
                         jogoRepository.salvarJogo(jogo);
                     }
+
+                    AppExecutors.getDatabaseExecutor().execute(() -> {
+                        if (callback != null) callback.onSuccess();
+                    });
                 }
 
                 @Override
                 public void onInvalid(String errorMessage) {
-                    Toast.makeText(App.getContext(), "Erro ao validar Steam ID: " + errorMessage, Toast.LENGTH_LONG).show();
+                    AppExecutors.getMainThreadExecutor().execute(() -> {
+                        if (callback != null) callback.onError(errorMessage);
+                    });
                 }
             });
         });

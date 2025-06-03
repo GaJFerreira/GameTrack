@@ -16,7 +16,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:padding="8dp"
-        tools:listitem="@layout/item_meta" />
+        tools:listitem="@layout/meta_layout" />
 
     <TextView
         android:id="@+id/textViewMetasVazio"
