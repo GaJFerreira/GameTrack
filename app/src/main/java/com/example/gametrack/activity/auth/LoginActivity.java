@@ -32,6 +32,7 @@ public class LoginActivity extends AppCompatActivity {
         autenticacao = FirebaseAuth.getInstance();
 
         FirebaseUser usuarioAtual = autenticacao.getCurrentUser();
+        Log.d(TAG, "suário atual: " + usuarioAtual.getEmail());
 
         if (usuarioAtual != null) {
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
