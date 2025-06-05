@@ -29,10 +29,6 @@
 
         <activity android:name=".activity.MainActivity" />
 
-        <activity android:name=".activity.PesquisaJogo" />
-
-        <activity android:name=".activity.DetalhesJogo" />
-
         <activity android:name=".activity.UsuarioActivity" />
 
     </application>

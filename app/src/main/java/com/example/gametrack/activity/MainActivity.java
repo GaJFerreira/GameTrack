@@ -75,9 +75,6 @@ public class MainActivity extends AppCompatActivity {
 //                usuarioDao.salvarUsuario(usuario);
 //                Toast.makeText(MainActivity.this,"Adicionao", Toast.LENGTH_SHORT).show();
 
-        //SincronizarBibliotecaSteamService sincronizarBibliotecaSteamService = new SincronizarBibliotecaSteamService();
-        //sincronizarBibliotecaSteamService.sincronizar();
-
 //        Intent intent = new Intent(MainActivity.this, PesquisaJogo.class);
 //        startActivity(intent);
 //            }
