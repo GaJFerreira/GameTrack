@@ -17,12 +17,7 @@ public class MetaRepository {
     }
 
     public void salvarMeta(Meta meta) {
-      try {
-          metaDao.salvarMeta(meta);
-      } catch (Exception e) {
-          Log.e("MetaRepository", "Erro ao salvar meta", e);
-          throw new RuntimeException(e);
-      }
+        metaDao.salvarMeta(meta);
     }
 
     public void atualizarMeta(Meta meta) {

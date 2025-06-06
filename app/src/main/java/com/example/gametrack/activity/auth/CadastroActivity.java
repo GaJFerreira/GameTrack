@@ -41,20 +41,18 @@ public class CadastroActivity extends AppCompatActivity {
         EditText senhaEditText = findViewById(R.id.senhaEditText);
         EditText confirmarSenhaEditText = findViewById(R.id.confirmarSenhaEditText);
 
-        EditText nomeEditText = findViewById(R.id.nomeEditText);
         EditText steamIdEditText = findViewById(R.id.steamIdEditText);
 
         Button cadastrarButton = findViewById(R.id.cadastrarButton);
         TextView loginText = findViewById(R.id.loginText);
 
         cadastrarButton.setOnClickListener(v -> {
-            String nome = nomeEditText.getText().toString().trim();
             String email = emailEditText.getText().toString().trim();
             String steamId = steamIdEditText.getText().toString().trim();
             String senha = senhaEditText.getText().toString().trim();
             String confirmarSenha = confirmarSenhaEditText.getText().toString().trim();
 
-            if (email.isEmpty() || nome.isEmpty() || steamId.isEmpty() || senha.isEmpty() || confirmarSenha.isEmpty()) {
+            if (email.isEmpty() || steamId.isEmpty() || senha.isEmpty() || confirmarSenha.isEmpty()) {
                 Toast.makeText(App.getContext(), "Preencha todos os campos", Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -82,7 +80,7 @@ public class CadastroActivity extends AppCompatActivity {
                     Usuario usuario = null;
 
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM) {
-                        usuario = new Usuario(nome, steamId.split(",")[0], email, players.getFirst().getAvatarmedium());
+                        usuario = new Usuario(players.getFirst().getPersonaname(), steamId.split(",")[0], email, players.getFirst().getAvatarmedium());
                     }
 
                     usuarioRepository.salvarUsuario(usuario);

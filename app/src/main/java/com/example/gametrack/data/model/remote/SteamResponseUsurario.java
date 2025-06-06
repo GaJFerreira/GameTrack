@@ -19,10 +19,6 @@ public class SteamResponseUsurario {
         public List<Player> getPlayers() {
             return players;
         }
-
-        public void setPlayers(List<Player> players) {
-            this.players = players;
-        }
     }
 
     public static class Player {
@@ -45,7 +41,6 @@ public class SteamResponseUsurario {
         private String locstatecode;
         private int loccityid;
 
-        // Getters e setters para todos os campos
         public String getSteamid() {
             return steamid;
         }

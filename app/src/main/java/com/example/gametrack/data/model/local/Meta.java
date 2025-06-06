@@ -1,41 +1,34 @@
 package com.example.gametrack.data.model.local;
 
+import androidx.annotation.NonNull;
+
 public class Meta {
 
     private long id;
-    private long jogoId;
     private Tipo tipo;
     private String valorMeta;
-    private String progressoAtual;
     private String dataLimite;
     private Prioridade prioridade;
     private String observacao;
-    private Status status;
 
     public Meta() {
     }
 
-    public Meta(long jogoId, Tipo tipo, String valorMeta, String progressoAtual, String dataLimite, Prioridade prioridade, String observacao, Status status) {
-        this.jogoId = jogoId;
+    public Meta(Tipo tipo, String valorMeta, String dataLimite, Prioridade prioridade, String observacao) {
         this.tipo = tipo;
         this.valorMeta = valorMeta;
-        this.progressoAtual = progressoAtual;
         this.dataLimite = dataLimite;
         this.prioridade = prioridade;
         this.observacao = observacao;
-        this.status = status;
     }
 
-    public Meta(long id, long jogoId, Tipo tipo, String valorMeta, String progressoAtual, String dataLimite, Prioridade prioridade, String observacao, Status status) {
+    public Meta(long id, Tipo tipo, String valorMeta, String dataLimite, Prioridade prioridade, String observacao) {
         this.id = id;
-        this.jogoId = jogoId;
         this.tipo = tipo;
         this.valorMeta = valorMeta;
-        this.progressoAtual = progressoAtual;
         this.dataLimite = dataLimite;
         this.prioridade = prioridade;
         this.observacao = observacao;
-        this.status = status;
     }
 
     public static enum Tipo{
@@ -64,35 +57,12 @@ public class Meta {
         }
     }
 
-    public static enum Status{
-        EM_ANDAMENTO("Em andamento"),
-        CONCLUIDO("Concluido"),
-        EXPIRADO("Expirado");
-
-        private final String descricao;
-
-        Status(String getDescricao){
-            this.descricao = getDescricao;
-        }
-        public String getDescricao() {
-            return descricao;
-        }
-    }
-
     public long getId() {
         return id;
     }
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public long getBibliotecaId() {
-        return jogoId;
-    }
-
-    public void setBibliotecaId(long bibliotecaId) {
-        this.jogoId = bibliotecaId;
     }
 
     public Tipo getTipo() {
@@ -109,14 +79,6 @@ public class Meta {
 
     public void setValorMeta(String valorMeta) {
         this.valorMeta = valorMeta;
-    }
-
-    public String getProgressoAtual() {
-        return progressoAtual;
-    }
-
-    public void setProgressoAtual(String progressoAtual) {
-        this.progressoAtual = progressoAtual;
     }
 
     public String getDataLimite() {
@@ -143,26 +105,16 @@ public class Meta {
         this.observacao = observacao;
     }
 
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
+    @NonNull
     @Override
     public String toString() {
         return "Meta{" +
                 "id=" + id +
-                ", bibliotecaId=" + jogoId +
                 ", tipo=" + tipo +
                 ", valorMeta='" + valorMeta + '\'' +
-                ", progressoAtual='" + progressoAtual + '\'' +
                 ", dataLimite='" + dataLimite + '\'' +
                 ", prioridade=" + prioridade +
-                ", observacao='" + observacao + '\'' +
-                ", status=" + status +
+                ", observacao='" + observacao +
                 '}';
     }
 }

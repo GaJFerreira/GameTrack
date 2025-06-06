@@ -1,5 +1,7 @@
 package com.example.gametrack.data.model.local;
 
+import androidx.annotation.NonNull;
+
 public class Jogo {
     private long id;
     private String titulo;
@@ -51,6 +53,7 @@ public class Jogo {
         this.icone = icone;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "Jogo{" +
