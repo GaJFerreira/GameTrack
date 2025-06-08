@@ -80,7 +80,7 @@ public class CadastroActivity extends AppCompatActivity {
                     Usuario usuario = null;
 
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM) {
-                        usuario = new Usuario(players.getFirst().getPersonaname(), steamId.split(",")[0], email, players.getFirst().getAvatarmedium());
+                        usuario = new Usuario(players.getFirst().getPersonaname(), steamId.split(",")[0], email, players.getFirst().getAvatarfull());
                     }
 
                     usuarioRepository.salvarUsuario(usuario);
