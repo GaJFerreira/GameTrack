@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.gametrack.App;
 import com.example.gametrack.activity.MainActivity;
 import com.example.gametrack.R;
+import com.example.gametrack.data.dao.UsuarioDao;
 import com.example.gametrack.data.model.local.Usuario;
 import com.example.gametrack.data.repository.UsuarioRepository;
 import com.example.gametrack.data.storage.SecurePreferences;
@@ -24,6 +25,8 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth autenticacao;
     private static final String TAG = "LoginActivity";
 
+    UsuarioDao usuarioRepository;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,13 +35,37 @@ public class LoginActivity extends AppCompatActivity {
         autenticacao = FirebaseAuth.getInstance();
 
         FirebaseUser usuarioAtual = autenticacao.getCurrentUser();
-        Log.d(TAG, "suário atual: " + usuarioAtual.getEmail());
+        usuarioRepository = new UsuarioDao(this);
 
-        if (usuarioAtual != null) {
-            startActivity(new Intent(LoginActivity.this, MainActivity.class));
-            finish();
-            return;
+        if(usuarioAtual == null){
+            Log.d(TAG, "usuário não logado");
         }
+        else{
+            Usuario usuarioLocal = usuarioRepository.buscarUsuarioPorEmail(usuarioAtual.getEmail());
+            if (usuarioLocal != null) {
+                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                    finish();
+                    return;
+            }else {
+                Toast.makeText(this, "Usuário não encontrado localmente", Toast.LENGTH_SHORT).show();
+            }
+
+        }
+
+      //  Log.d(TAG, "suário atual: " + usuarioAtual.getEmail());
+
+//
+//        Usuario usuarioLocal = usuarioRepository.buscarUsuarioPorEmail(usuarioAtual.getEmail());
+//
+//        if (usuarioLocal != null) {
+//            if (usuarioAtual != null) {
+//                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+//                finish();
+//                return;
+//            }
+//        }else {
+//            Toast.makeText(this, "Usuário não encontrado localmente", Toast.LENGTH_SHORT).show();
+//        }
 
         EditText emailEditText = findViewById(R.id.emailEditText);
         EditText senhaEditText = findViewById(R.id.senhaEditText);

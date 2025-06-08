@@ -17,7 +17,6 @@
         android:scaleType="fitCenter"
         android:contentDescription="Imagem de Perfil do Usuário"
         app:srcCompat="@drawable/ic_profile_placeholder"
-        android:background="@color/white"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
