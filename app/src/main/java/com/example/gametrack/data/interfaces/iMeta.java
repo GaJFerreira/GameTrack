@@ -3,6 +3,7 @@ package com.example.gametrack.data.interfaces;
 import com.example.gametrack.data.model.local.Meta;
 
 import java.util.List;
+import java.util.Map;
 
 public interface iMeta {
 
@@ -11,9 +12,6 @@ public interface iMeta {
     void atualizarMeta(Meta meta);
 
     void excluirMeta(long id);
-
-    Meta biscarPorId(long id);
-
-    List<Meta> listarMetas();
+    Map<String, List<Meta>> listarMetasPorUsuarioAgrupadasPorDia(long id);
 
 }

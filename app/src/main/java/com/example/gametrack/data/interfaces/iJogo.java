@@ -12,7 +12,7 @@ public interface iJogo {
 
     void excluirJogo(long id);
 
-    Jogo buscarPorId(long id);
+    Jogo buscarPorSteamId(long id);
 
     List<Jogo> listarJogos();
 }

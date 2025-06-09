@@ -40,9 +40,9 @@
 
     <fragment
         android:id="@+id/detalhesFragment"
-        android:name="com.example.gametrack.fragments.DetalhesFragment"
+        android:name="com.example.gametrack.fragments.DetalhesJogoFragment"
         android:label="Detalhes"
-        tools:layout="@layout/detalhes_jogo">
+        tools:layout="@layout/fragment_detalhes_jogo">
         <action
             android:id="@+id/action_detalhesFragment_to_novaMetaFragment"
             app:destination="@id/novaMetaFragment" />

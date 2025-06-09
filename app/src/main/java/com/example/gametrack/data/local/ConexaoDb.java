@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class ConexaoDb extends SQLiteOpenHelper {
 
     private static final String NOME_BANCO = "gametrack.db";
-    private static final int VERSAO_BANCO = 6;
+    private static final int VERSAO_BANCO = 7;
 
     private static ConexaoDb instancia;
     private static SQLiteDatabase conexao;
@@ -51,7 +51,11 @@ public class ConexaoDb extends SQLiteOpenHelper {
                 "valorMeta TEXT," +
                 "dataFim TEXT," +
                 "prioridade TEXT," +
-                "observacao TEXT" +
+                "observacao TEXT," +
+                "id_jogo INTEGER," +
+                "id_usuario INTEGER," +
+                "FOREIGN KEY(id_jogo) REFERENCES jogo(id)," +
+                "FOREIGN KEY(id_usuario) REFERENCES usuario(id)" +
                 ")";
         db.execSQL(sqlMeta);
     }

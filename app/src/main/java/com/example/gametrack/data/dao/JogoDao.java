@@ -57,12 +57,12 @@ public class JogoDao implements iJogo {
     }
 
     @Override
-    public Jogo buscarPorId(long id) {
+    public Jogo buscarPorSteamId(long appSteamId) {
         Cursor cursor = conexao.query(
                 "jogo",
                 new String[]{"id", "appSteamId", "titulo", "icone"},
-                "id = ?",
-                new String[]{String.valueOf(id)},
+                "appSteamId = ?", // aqui era "id = ?"
+                new String[]{String.valueOf(appSteamId)},
                 null,
                 null,
                 null

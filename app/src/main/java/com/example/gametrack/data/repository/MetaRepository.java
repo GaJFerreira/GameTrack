@@ -7,6 +7,7 @@ import com.example.gametrack.data.dao.MetaDao;
 import com.example.gametrack.data.model.local.Meta;
 
 import java.util.List;
+import java.util.Map;
 
 public class MetaRepository {
 
@@ -28,8 +29,8 @@ public class MetaRepository {
         metaDao.excluirMeta(id);
     }
 
-    public List<Meta> listarMetas() {
-        return metaDao.listarMetas();
+    public Map<String, List<Meta>> listarMetasPorUsuarioAgrupadasPorDia(long id) {
+        return metaDao.listarMetasPorUsuarioAgrupadasPorDia(id);
     }
 
 

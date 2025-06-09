@@ -27,8 +27,8 @@ public class JogoRepository {
         jogoDao.excluirJogo(id);
     }
 
-    public Jogo buscarPorId(long id) {
-        return jogoDao.buscarPorId(id);
+    public Jogo buscarPorSteamId(long id) {
+        return jogoDao.buscarPorSteamId(id);
     }
 
     public List<Jogo> listarJogos() {

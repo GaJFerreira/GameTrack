@@ -106,7 +106,6 @@ public class CadastroActivity extends AppCompatActivity {
         autenticacao.createUserWithEmailAndPassword(email, senha)
                 .addOnCompleteListener(this, tarefa -> {
                     if (tarefa.isSuccessful()) {
-//                        FirebaseUser usuario = autenticacao.getCurrentUser();
                         Toast.makeText(CadastroActivity.this, "Cadastro realizado com sucesso!", Toast.LENGTH_SHORT).show();
 
                         Intent intent = new Intent(CadastroActivity.this, LoginActivity.class);

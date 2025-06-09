@@ -28,7 +28,7 @@ import com.google.gson.Gson;
 
 import org.json.JSONObject;
 
-public class DetalhesFragment extends Fragment {
+public class DetalhesJogoFragment extends Fragment {
 
     private PlayerView playerView;
     private ExoPlayer player;
@@ -41,7 +41,7 @@ public class DetalhesFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.detalhes_jogo, container, false);
+        return inflater.inflate(R.layout.fragment_detalhes_jogo, container, false);
     }
 
     @Override
@@ -61,7 +61,7 @@ public class DetalhesFragment extends Fragment {
 
         ImageButton btnVoltar = view.findViewById(R.id.btn_voltar);
         btnVoltar.setOnClickListener(v ->
-                NavHostFragment.findNavController(DetalhesFragment.this).navigateUp()
+                NavHostFragment.findNavController(DetalhesJogoFragment.this).navigateUp()
         );
 
         LinearLayout definirMetaButton = view.findViewById(R.id.definirMetaButton);
@@ -69,7 +69,7 @@ public class DetalhesFragment extends Fragment {
             Bundle bundle = new Bundle();
             bundle.putLong("appSteamId", steamId);
 
-            NavHostFragment.findNavController(DetalhesFragment.this)
+            NavHostFragment.findNavController(DetalhesJogoFragment.this)
                     .navigate(R.id.action_detalhesFragment_to_novaMetaFragment, bundle);
         });
     }

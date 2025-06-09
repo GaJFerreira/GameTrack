@@ -3,11 +3,13 @@ package com.example.gametrack.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.gametrack.R;
 import com.example.gametrack.data.model.local.MetaLayout;
 
@@ -32,6 +34,10 @@ public class MetaAdapter extends RecyclerView.Adapter<MetaAdapter.MetaViewHolder
         MetaLayout meta = metas.get(position);
         holder.txtTitulo.setText(meta.getTitulo());
         holder.txtDescricao.setText(meta.getDescricao());
+
+        Glide.with(holder.itemView.getContext())
+                .load(meta.getIconeJogo())
+                .into(holder.imgIconeJogo);
     }
 
     @Override
@@ -41,12 +47,13 @@ public class MetaAdapter extends RecyclerView.Adapter<MetaAdapter.MetaViewHolder
 
     static class MetaViewHolder extends RecyclerView.ViewHolder {
         TextView txtTitulo, txtDescricao;
+        ImageView imgIconeJogo;
 
         public MetaViewHolder(@NonNull View itemView) {
             super(itemView);
             txtTitulo = itemView.findViewById(R.id.txtTituloMeta);
             txtDescricao = itemView.findViewById(R.id.txtDescricaoMeta);
+            imgIconeJogo = itemView.findViewById(R.id.imgIconeJogo);
         }
     }
 }
-

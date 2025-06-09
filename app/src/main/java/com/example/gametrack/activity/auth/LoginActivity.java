@@ -52,21 +52,6 @@ public class LoginActivity extends AppCompatActivity {
 
         }
 
-      //  Log.d(TAG, "suário atual: " + usuarioAtual.getEmail());
-
-//
-//        Usuario usuarioLocal = usuarioRepository.buscarUsuarioPorEmail(usuarioAtual.getEmail());
-//
-//        if (usuarioLocal != null) {
-//            if (usuarioAtual != null) {
-//                startActivity(new Intent(LoginActivity.this, MainActivity.class));
-//                finish();
-//                return;
-//            }
-//        }else {
-//            Toast.makeText(this, "Usuário não encontrado localmente", Toast.LENGTH_SHORT).show();
-//        }
-
         EditText emailEditText = findViewById(R.id.emailEditText);
         EditText senhaEditText = findViewById(R.id.senhaEditText);
         Button btnLogin = findViewById(R.id.loginButton);
@@ -116,6 +101,7 @@ public class LoginActivity extends AppCompatActivity {
 
         if (usuario != null && usuario.getSteamId() != null) {
             SecurePreferences.save("steamid", usuario.getSteamId());
+            SecurePreferences.save("emailUsuario" , usuario.getEmail());
             Log.d(TAG, "Steam ID salvo com sucesso: " + usuario.getSteamId());
         } else {
             Log.e(TAG, "Usuário ou Steam ID não encontrado para o email: " + email);

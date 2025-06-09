@@ -12,25 +12,31 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.gametrack.App;
 import com.example.gametrack.R;
 import com.example.gametrack.adapter.DiaAdapter;
+import com.example.gametrack.data.dao.MetaDao;
 import com.example.gametrack.data.model.local.DiaLayout;
 import com.example.gametrack.data.model.local.Meta;
 import com.example.gametrack.data.model.local.MetaLayout;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 
 public class HomeFragment extends Fragment {
 
-    private static final String TAG = "InicioFragment";
-
-    private ExecutorService executorService;
-    private Handler mainThreadHandler;
+    private final ExecutorService executorService;
+    private final Handler mainThreadHandler;
 
     public HomeFragment() {
-        // Construtor vazio requerido
+        executorService = java.util.concurrent.Executors.newSingleThreadExecutor();
+        mainThreadHandler = new Handler();
     }
 
     @Nullable
@@ -38,7 +44,6 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        // Inflar o layout da fragment (crie um layout com RecyclerView id recyclerDias)
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
@@ -49,32 +54,47 @@ public class HomeFragment extends Fragment {
         RecyclerView recyclerDias = view.findViewById(R.id.recyclerDias);
         recyclerDias.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        // Gerar dados mockados sem biblioteca
-        List<DiaLayout> diasMock = gerarDiasMock();
+        executorService.execute(() -> {
+            Map<String, List<Meta>> metasAgrupadas = buscarTodasMetasDoBanco();
 
-        // Criar adapter e setar no recycler
-        DiaAdapter diaAdapter = new DiaAdapter(diasMock);
-        recyclerDias.setAdapter(diaAdapter);
+            List<DiaLayout> dias = new ArrayList<>();
+            for (Map.Entry<String, List<Meta>> entry : metasAgrupadas.entrySet()) {
+                String dataFormatada = formatarData(entry.getKey());
+
+                List<MetaLayout> metasDoDia = new ArrayList<>();
+                for (Meta meta : entry.getValue()) {
+                    metasDoDia.add(new MetaLayout(
+                            meta.getJogo().getTitulo(),
+                            "Prioridade: " + meta.getPrioridade().name(),
+                            meta.getJogo().getIcone()
+                    ));
+                }
+
+                dias.add(new DiaLayout(dataFormatada, metasDoDia));
+            }
+
+            mainThreadHandler.post(() -> {
+                DiaAdapter diaAdapter = new DiaAdapter(dias);
+                recyclerDias.setAdapter(diaAdapter);
+            });
+        });
     }
 
-    private List<DiaLayout> gerarDiasMock() {
-        List<DiaLayout> dias = new ArrayList<>();
+    private Map<String, List<Meta>> buscarTodasMetasDoBanco() {
+        MetaDao metaDao = new MetaDao(App.getContext());
+        return metaDao.listarMetasPorUsuarioAgrupadasPorDia(1);
+    }
 
-        // Criar metas para o dia 1
-        List<MetaLayout> metasDia1 = new ArrayList<>();
-        metasDia1.add(new MetaLayout("Comprar pão", "Ir à padaria às 8h"));
-        metasDia1.add(new MetaLayout("Reunião", "Call com o time às 10h"));
-
-        // Criar metas para o dia 2
-        List<MetaLayout> metasDia2 = new ArrayList<>();
-        metasDia2.add(new MetaLayout("Exercício", "Corrida de 5km"));
-        metasDia2.add(new MetaLayout("Estudo", "Ler capítulo 4 do livro"));
-        metasDia2.add(new MetaLayout("Almoço", "Comer com amigos"));
-
-        // Montar os dias
-        dias.add(new DiaLayout("05/06/2025", metasDia1));
-        dias.add(new DiaLayout("06/06/2025", metasDia2));
-
-        return dias;
+    private String formatarData(String dataISO) {
+        try {
+            SimpleDateFormat sdfBanco = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+            Date data = sdfBanco.parse(dataISO);
+            SimpleDateFormat sdfDisplay = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+            return sdfDisplay.format(Objects.requireNonNull(data));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return dataISO;
+        }
     }
 }
+
