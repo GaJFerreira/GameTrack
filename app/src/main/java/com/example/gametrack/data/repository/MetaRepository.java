@@ -29,6 +29,10 @@ public class MetaRepository {
         metaDao.excluirMeta(id);
     }
 
+    public Meta buscarMetaPorId(long id) {
+        return metaDao.buscarMetaPorId(id);
+    }
+
     public Map<String, List<Meta>> listarMetasPorUsuarioAgrupadasPorDia(long id) {
         return metaDao.listarMetasPorUsuarioAgrupadasPorDia(id);
     }

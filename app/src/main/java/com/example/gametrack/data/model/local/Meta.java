@@ -9,6 +9,7 @@ public class Meta {
     private Usuario usuario;
     private Tipo tipo;
     private String valorMeta;
+    private String dataInicial;
     private String dataLimite;
     private Prioridade prioridade;
     private String observacao;
@@ -16,9 +17,10 @@ public class Meta {
     public Meta() {
     }
 
-    public Meta(Tipo tipo, String valorMeta, String dataLimite, Prioridade prioridade, String observacao, Jogo jogo, Usuario usuario) {
+    public Meta(Tipo tipo, String valorMeta, String dataInicial, String dataLimite, Prioridade prioridade, String observacao, Jogo jogo, Usuario usuario) {
         this.tipo = tipo;
         this.valorMeta = valorMeta;
+        this.dataInicial = dataInicial;
         this.dataLimite = dataLimite;
         this.prioridade = prioridade;
         this.observacao = observacao;
@@ -26,10 +28,11 @@ public class Meta {
         this.usuario = usuario;
     }
 
-    public Meta(long id, Tipo tipo, String valorMeta, String dataLimite, Prioridade prioridade, String observacao, Jogo jogo, Usuario usuario) {
+    public Meta(long id, Tipo tipo, String valorMeta, String dataInicial, String dataLimite, Prioridade prioridade, String observacao, Jogo jogo, Usuario usuario) {
         this.id = id;
         this.tipo = tipo;
         this.valorMeta = valorMeta;
+        this.dataInicial = dataInicial;
         this.dataLimite = dataLimite;
         this.prioridade = prioridade;
         this.observacao = observacao;
@@ -59,8 +62,8 @@ public class Meta {
 
         private final String descricao;
 
-        Prioridade(String getDescricao) {
-            this.descricao = getDescricao;
+        Prioridade(String descricao) {
+            this.descricao = descricao;
         }
 
         public String getDescricao() {
@@ -68,7 +71,7 @@ public class Meta {
         }
     }
 
-    // Getters e setters
+    // Getters e Setters
     public long getId() {
         return id;
     }
@@ -104,6 +107,13 @@ public class Meta {
         this.valorMeta = valorMeta;
     }
 
+    public String getDataInicial() {
+        return dataInicial;
+    }
+    public void setDataInicial(String dataInicial) {
+        this.dataInicial = dataInicial;
+    }
+
     public String getDataLimite() {
         return dataLimite;
     }
@@ -134,6 +144,7 @@ public class Meta {
                 ", usuario=" + (usuario != null ? usuario.toString() : "null") +
                 ", tipo=" + tipo +
                 ", valorMeta='" + valorMeta + '\'' +
+                ", dataInicial='" + dataInicial + '\'' +
                 ", dataLimite='" + dataLimite + '\'' +
                 ", prioridade=" + prioridade +
                 ", observacao='" + observacao + '\'' +

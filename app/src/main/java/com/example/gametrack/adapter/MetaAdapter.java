@@ -1,5 +1,6 @@
 package com.example.gametrack.adapter;
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,6 +8,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -38,6 +41,16 @@ public class MetaAdapter extends RecyclerView.Adapter<MetaAdapter.MetaViewHolder
         Glide.with(holder.itemView.getContext())
                 .load(meta.getIconeJogo())
                 .into(holder.imgIconeJogo);
+
+        holder.itemView.setOnClickListener(v -> {
+            long idMeta = meta.getIdMeta();
+
+            Bundle bundle = new Bundle();
+            bundle.putLong("idMeta", idMeta);
+
+            NavController navController = Navigation.findNavController(v);
+            navController.navigate(R.id.action_nav_home_to_metaDetalhesFragment, bundle);
+        });
     }
 
     @Override

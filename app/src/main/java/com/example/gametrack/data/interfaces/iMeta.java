@@ -12,6 +12,8 @@ public interface iMeta {
     void atualizarMeta(Meta meta);
 
     void excluirMeta(long id);
-    Map<String, List<Meta>> listarMetasPorUsuarioAgrupadasPorDia(long id);
 
+    Meta buscarMetaPorId(long id);
+
+    Map<String, List<Meta>> listarMetasPorUsuarioAgrupadasPorDia(long id);
 }

@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class ConexaoDb extends SQLiteOpenHelper {
 
     private static final String NOME_BANCO = "gametrack.db";
-    private static final int VERSAO_BANCO = 7;
+    private static final int VERSAO_BANCO = 8;
 
     private static ConexaoDb instancia;
     private static SQLiteDatabase conexao;
@@ -49,6 +49,7 @@ public class ConexaoDb extends SQLiteOpenHelper {
                 "id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "tipo TEXT," +
                 "valorMeta TEXT," +
+                "dataInicial TEXT," +
                 "dataFim TEXT," +
                 "prioridade TEXT," +
                 "observacao TEXT," +

@@ -195,9 +195,13 @@ public class CadastrarMetaFragment extends Fragment {
             return;
         }
 
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        String dataInicial = sdf.format(new Date());
+
         Meta novaMeta = new Meta();
         novaMeta.setTipo(tipo);
         novaMeta.setValorMeta(valorMeta);
+        novaMeta.setDataInicial(dataInicial);
         novaMeta.setDataLimite(dataLimite);
         novaMeta.setPrioridade(prioridade);
         novaMeta.setObservacao(observacao);

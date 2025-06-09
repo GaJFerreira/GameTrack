@@ -2,6 +2,7 @@ package com.example.gametrack.fragments;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +31,7 @@ import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 
 public class HomeFragment extends Fragment {
-
+    private static final String TAG = "HomeFragment";
     private final ExecutorService executorService;
     private final Handler mainThreadHandler;
 
@@ -66,7 +67,8 @@ public class HomeFragment extends Fragment {
                     metasDoDia.add(new MetaLayout(
                             meta.getJogo().getTitulo(),
                             "Prioridade: " + meta.getPrioridade().name(),
-                            meta.getJogo().getIcone()
+                            meta.getJogo().getIcone(),
+                            meta.getId()
                     ));
                 }
 
@@ -92,9 +94,10 @@ public class HomeFragment extends Fragment {
             SimpleDateFormat sdfDisplay = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
             return sdfDisplay.format(Objects.requireNonNull(data));
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e(TAG, "Erro ao formatar data: valor recebido = \"" + dataISO + "\"", e);
             return dataISO;
         }
     }
+
 }
 

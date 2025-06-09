@@ -31,6 +31,9 @@
         <action
             android:id="@+id/action_nav_home_to_nav_profile"
             app:destination="@id/nav_profile" />
+        <action
+            android:id="@+id/action_nav_home_to_metaDetalhesFragment"
+            app:destination="@id/metaDetalhesFragment" />
     </fragment>
 
     <fragment
@@ -46,6 +49,16 @@
         <action
             android:id="@+id/action_detalhesFragment_to_novaMetaFragment"
             app:destination="@id/novaMetaFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/metaDetalhesFragment"
+        android:name="com.example.gametrack.fragments.DetalhesMetaFragment"
+        android:label="Detalhes da Meta"
+        tools:layout="@layout/fragment_detalhes_meta">
+        <argument
+            android:name="idMeta"
+            app:argType="long" />
     </fragment>
 
 </navigation>

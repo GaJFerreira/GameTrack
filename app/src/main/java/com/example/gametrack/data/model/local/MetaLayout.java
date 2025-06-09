@@ -4,11 +4,13 @@ public class MetaLayout {
     private String titulo;
     private String descricao;
     private String iconeJogo;
+    private long idMeta;
 
-    public MetaLayout(String titulo, String descricao, String iconeJogo) {
+    public MetaLayout(String titulo, String descricao, String iconeJogo, long idMeta) {
         this.titulo = titulo;
         this.descricao = descricao;
         this.iconeJogo = iconeJogo;
+        this.idMeta = idMeta;
     }
 
     public String getTitulo() {
@@ -33,5 +35,13 @@ public class MetaLayout {
 
     public void setIconeJogo(String iconeJogo) {
         this.iconeJogo = iconeJogo;
+    }
+
+    public long getIdMeta() {
+        return idMeta;
+    }
+
+    public void setIdMeta(long idMeta) {
+        this.idMeta = idMeta;
     }
 }
